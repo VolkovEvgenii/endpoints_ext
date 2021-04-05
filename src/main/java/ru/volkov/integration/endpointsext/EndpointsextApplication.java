@@ -14,9 +14,9 @@ import org.springframework.messaging.support.MessageBuilder;
 @ImportResource("classpath:integration_context.xml")
 public class EndpointsextApplication implements ApplicationRunner {
 
-    private PrinterGateway gateway;
+    private EnhancedPrinterGateway gateway;
 
-    public EndpointsextApplication(PrinterGateway gateway) {
+    public EndpointsextApplication(EnhancedPrinterGateway gateway) {
         this.gateway = gateway;
     }
 
@@ -28,8 +28,8 @@ public class EndpointsextApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         Person[] payloads = {new Person("Kevin", "Bowersox"), new Person("John", "Doe")};
         for (int i = 0; i < payloads.length; i++) {
-            Message<?> message = MessageBuilder.withPayload(payloads[i]).setHeader("replyChannel", "outputChannel").build();
-            this.gateway.print(message);
+            String messageString = this.gateway.uppercase(payloads[i]);
+            System.out.println(messageString);
         }
     }
 }
