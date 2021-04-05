@@ -8,7 +8,10 @@
        https://www.springframework.org/schema/integration/spring-integration.xsd">
 
     <int:gateway service-interface="ru.volkov.integration.endpointsext.EnhancedPrinterGateway">
-        <int:method name="print" request-channel="printChannel"/>
+        <int:default-header name="globalHeader" value="simpleValue"/>
+        <int:method name="print" request-channel="printChannel">
+            <int:header name="individualHeader" expression="#args[0].firstName"/>
+        </int:method>
         <int:method name="uppercase" request-channel="uppercaseChannel"/>
     </int:gateway>
 

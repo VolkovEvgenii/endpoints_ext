@@ -28,8 +28,7 @@ public class EndpointsextApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         Person[] payloads = {new Person("Kevin", "Bowersox"), new Person("John", "Doe")};
         for (int i = 0; i < payloads.length; i++) {
-            String messageString = this.gateway.uppercase(payloads[i]);
-            System.out.println(messageString);
+            this.gateway.print(payloads[i]);
         }
     }
 }
