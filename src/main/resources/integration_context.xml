@@ -7,13 +7,10 @@
        http://www.springframework.org/schema/integration
        https://www.springframework.org/schema/integration/spring-integration.xsd">
 
-    <int:gateway service-interface="ru.volkov.integration.endpointsext.EnhancedPrinterGateway">
-        <int:default-header name="globalHeader" value="simpleValue"/>
-        <int:method name="print" request-channel="printChannel">
-            <int:header name="individualHeader" expression="#args[0].firstName"/>
-        </int:method>
-        <int:method name="uppercase" request-channel="uppercaseChannel"/>
-    </int:gateway>
+    <int:inbound-channel-adapter ref="personDirectoryService" method="findNewPerson" channel="printChannel">
+        <int:poller fixed-rate="3000"/>
+    </int:inbound-channel-adapter>
+    <bean id="personDirectoryService" class="ru.volkov.integration.endpointsext.PersonDirectoryService"/>
 
     <int:channel id="printChannel"/>
     <int:channel id="uppercaseChannel"/>

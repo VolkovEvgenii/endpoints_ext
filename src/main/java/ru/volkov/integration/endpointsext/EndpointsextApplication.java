@@ -14,21 +14,12 @@ import org.springframework.messaging.support.MessageBuilder;
 @ImportResource("classpath:integration_context.xml")
 public class EndpointsextApplication implements ApplicationRunner {
 
-    private EnhancedPrinterGateway gateway;
-
-    public EndpointsextApplication(EnhancedPrinterGateway gateway) {
-        this.gateway = gateway;
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(EndpointsextApplication.class, args);
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Person[] payloads = {new Person("Kevin", "Bowersox"), new Person("John", "Doe")};
-        for (int i = 0; i < payloads.length; i++) {
-            this.gateway.print(payloads[i]);
-        }
+
     }
 }
