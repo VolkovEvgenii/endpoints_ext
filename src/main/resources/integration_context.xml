@@ -7,18 +7,14 @@
        http://www.springframework.org/schema/integration
        https://www.springframework.org/schema/integration/spring-integration.xsd">
 
-    <int:inbound-channel-adapter ref="personDirectoryService" method="findNewPerson" channel="printChannel">
+    <int:inbound-channel-adapter ref="personDirectoryService" method="findNewPerson" channel="registerChannel">
         <int:poller fixed-rate="3000"/>
     </int:inbound-channel-adapter>
     <bean id="personDirectoryService" class="ru.volkov.integration.endpointsext.PersonDirectoryService"/>
 
-    <int:channel id="printChannel"/>
-    <int:channel id="uppercaseChannel"/>
+    <int:channel id="registerChannel"/>
 
-    <bean id="uppercaseService" class="ru.volkov.integration.endpointsext.UppercaseService"/>
-    <int:service-activator ref="uppercaseService" method="execute" input-channel="uppercaseChannel"/>
-
-    <bean id="printService" class="ru.volkov.integration.endpointsext.PrintService"/>
-    <int:service-activator ref="printService" method="print" input-channel="printChannel"/>
+    <int:outbound-channel-adapter ref="personRegistrationService" method="registerEmail" channel="registerChannel"/>
+    <bean id="personRegistrationService" class="ru.volkov.integration.endpointsext.PersonRegistrationService"/>
 
 </beans>
